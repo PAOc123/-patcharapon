@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>อารยธรรมจีน — เส้นสายราชวงศ์</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Taviraj:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --parchment:#F2E8D5;
+  --paper:#FAF3E4;
+  --ink:#2B2118;
+  --ink-soft:#5A4E40;
+  --vermilion:#A6321F;
+  --jade:#2F5A45;
+  --gold:#B5892B;
+  --line:rgba(43,33,24,0.14);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--parchment); color:var(--ink);
+  font-family:'Sarabun',sans-serif; font-weight:400;
+  line-height:1.75;
+}
+h1,h2{ font-family:'Taviraj',serif; margin:0; color:var(--ink); font-weight:500; }
+p{ margin:0 0 14px; max-width:64ch; color:var(--ink-soft); }
+ul{ margin:10px 0 0; padding:0; list-style:none; }
+@media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } html{ scroll-behavior:auto; } }
+
+/* TOP BAR */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  background:rgba(242,232,213,0.92); backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{ max-width:1100px; margin:0 auto; padding:12px 18px; }
+.brand{ font-family:'Taviraj',serif; font-size:19px; margin-bottom:8px; color:var(--ink); }
+.brand b{ font-weight:600; color:var(--vermilion); }
+.chips{
+  display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;
+  scrollbar-width:none;
+}
+.chips::-webkit-scrollbar{ display:none; }
+.chips button{
+  flex:0 0 auto; font-family:'Sarabun',sans-serif; font-size:13px;
+  background:transparent; border:1px solid var(--line); color:var(--ink-soft);
+  padding:6px 14px; border-radius:999px; cursor:pointer; white-space:nowrap;
+  transition:border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+.chips button.active{
+  border-color:var(--accent-active, var(--vermilion));
+  color:var(--accent-active, var(--vermilion));
+  background:rgba(166,50,31,0.08);
+}
+
+/* HERO */
+.hero{ max-width:760px; margin:0 auto; padding:56px 22px 40px; text-align:left; }
+.hero .eyebrow{ font-size:13px; color:var(--gold); letter-spacing:0.3px; margin-bottom:10px; }
+.hero h1{ font-size:clamp(30px,6vw,42px); line-height:1.28; margin-bottom:18px; }
+.hero p{ font-size:16px; }
+
+/* TIMELINE RULE */
+.timeline-rule{
+  max-width:1100px; margin:0 auto; padding:0 22px 10px;
+  display:flex; align-items:center; gap:10px; color:var(--ink-soft); font-size:13px;
+}
+.timeline-rule .rule{ flex:1; height:1px; background:var(--line); }
+
+/* ERA SECTION */
+.era{
+  border-top:1px solid var(--line);
+  padding:52px 22px;
+}
+.era-inner{
+  max-width:1100px; margin:0 auto;
+  display:flex; flex-direction:column; gap:30px;
+}
+@media(min-width:820px){
+  .era-inner{ flex-direction:row; align-items:center; gap:56px; }
+  .era:nth-of-type(even) .era-inner{ flex-direction:row-reverse; }
+  .era-text{ flex:1 1 50%; }
+  .era-visual{ flex:1 1 50%; }
+}
+.era-period{
+  display:inline-block; font-size:13px; color:var(--accent,var(--vermilion));
+  margin-bottom:8px; font-weight:500;
+}
+.era-text h2{ font-size:clamp(24px,4vw,30px); margin-bottom:14px; }
+.era-text p{ font-size:15.5px; }
+.highlights{ margin-top:16px; display:flex; flex-direction:column; gap:8px; }
+.highlights li{
+  font-size:14px; color:var(--ink-soft); padding-left:16px; position:relative;
+}
+.highlights li::before{
+  content:""; position:absolute; left:0; top:9px; width:6px; height:6px;
+  background:var(--accent,var(--vermilion)); border-radius:1px; transform:rotate(45deg);
+}
+
+/* PAPER DIORAMA */
+.era-visual{ display:flex; justify-content:center; }
+.stage{ perspective:900px; width:100%; max-width:360px; }
+.diorama{
+  position:relative; width:100%; aspect-ratio:4/3;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--accent,var(--vermilion)) 12%, var(--paper)) 0%, var(--paper) 62%);
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 22px 40px -18px rgba(43,33,24,0.45), inset 0 0 0 1px rgba(43,33,24,0.08);
+  transform:rotateX(8deg) rotateY(-6deg);
+  transition:transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s ease;
+  opacity:0; transform:rotateX(8deg) rotateY(-6deg) translateY(18px);
+}
+.era.in-view .diorama{ opacity:1; transform:rotateX(6deg) rotateY(-4deg) translateY(0); }
+
+.diorama .backdrop{
+  position:absolute; inset:0;
+}
+.diorama .hill{
+  position:absolute; left:-6%; right:-6%; bottom:0; height:38%;
+  background:color-mix(in srgb, var(--accent,var(--vermilion)) 16%, var(--paper));
+  clip-path:polygon(0% 100%, 0% 55%, 15% 35%, 32% 58%, 50% 28%, 68% 55%, 85% 32%, 100% 52%, 100% 100%);
+  box-shadow:0 -3px 8px rgba(43,33,24,0.10);
+}
+.diorama .ground{
+  position:absolute; left:0; right:0; bottom:0; height:14%;
+  background:color-mix(in srgb, var(--accent,var(--vermilion)) 26%, var(--paper));
+}
+.diorama .caption{
+  position:absolute; left:0; right:0; bottom:8px; text-align:center;
+  font-family:'Sarabun',sans-serif; font-size:11.5px; color:var(--ink-soft);
+  letter-spacing:0.2px;
+}
+.structure{ position:absolute; left:50%; bottom:20%; transform:translateX(-50%); }
+
+/* type: wall */
+.type-wall .structure{
+  width:78%; height:34%; bottom:16%;
+  background:var(--accent,var(--vermilion));
+  clip-path:polygon(0% 100%,0% 44%,8% 44%,8% 18%,17% 18%,17% 44%,25% 44%,25% 18%,34% 18%,34% 44%,42% 44%,42% 18%,50% 18%,50% 44%,58% 44%,58% 18%,67% 18%,67% 44%,75% 44%,75% 18%,84% 18%,84% 44%,92% 44%,92% 18%,100% 18%,100% 44%,100% 100%);
+  box-shadow:0 10px 18px -8px rgba(43,33,24,0.5);
+}
+
+/* type: pagoda (tiers) */
+.type-pagoda .structure{ width:60%; bottom:16%; height:56%; }
+.type-pagoda .tier{
+  position:absolute; left:50%; background:var(--accent,var(--vermilion));
+  clip-path:polygon(4% 100%,0% 70%,50% 0%,100% 70%,96% 100%);
+  box-shadow:0 6px 10px -6px rgba(43,33,24,0.45);
+}
+
+/* type: palace (wide roofs) */
+.type-palace .structure{ width:92%; bottom:16%; height:46%; }
+.type-palace .roof{
+  position:absolute; background:var(--accent,var(--vermilion));
+  clip-path:polygon(0% 100%,6% 40%,50% 0%,94% 40%,100% 100%);
+  box-shadow:0 8px 14px -8px rgba(43,33,24,0.45);
+}
+.type-palace .base{
+  position:absolute; bottom:0; background:color-mix(in srgb, var(--accent,var(--vermilion)) 55%, var(--ink) 10%);
+}
+
+/* type: bridge */
+.type-bridge .structure{ width:70%; bottom:18%; height:34%; }
+.type-bridge .arch{
+  position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+  width:88%; height:130%; border:14px solid var(--accent,var(--vermilion));
+  border-bottom:none; border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow:0 8px 14px -8px rgba(43,33,24,0.4);
+}
+.diorama .water{
+  position:absolute; left:0; right:0; bottom:12%; height:2%;
+  background:repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent,var(--vermilion)) 30%, var(--paper)) 0 10px, transparent 10px 22px);
+  opacity:0.7;
+}
+
+footer{
+  text-align:center; padding:44px 20px 60px; color:var(--ink-soft); font-size:13px;
+  border-top:1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">华夏 <b>อารยธรรมจีน</b></div>
+    <nav class="chips" id="chips">
+      <button data-target="xia">เซี่ย</button>
+      <button data-target="shang">ซาง</button>
+      <button data-target="zhou">โจว</button>
+      <button data-target="qin">ฉิน</button>
+      <button data-target="han">ฮั่น</button>
+      <button data-target="disunity">ยุคแยกแผ่นดิน</button>
+      <button data-target="sui">สุย</button>
+      <button data-target="tang">ถัง</button>
+      <button data-target="song">ซ่ง</button>
+      <button data-target="yuan">หยวน</button>
+      <button data-target="ming">หมิง</button>
+      <button data-target="qing">ชิง</button>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="eyebrow">ราชวงศ์จีน ตั้งแต่ตำนานจนถึงยุคสมัยใหม่</div>
+  <h1>สี่พันปีแห่งราชวงศ์ ตั้งแต่ริมฝั่งแม่น้ำฮวงโหจนถึงพระราชวังต้องห้าม</h1>
+  <p>จีนสืบทอดอารยธรรมผ่านราชวงศ์กว่าสิบราชวงศ์ แต่ละยุคทิ้งร่องรอยไว้ในรูปของกำแพง วัง สะพาน และเจดีย์ที่ยังยืนหยัดจนถึงทุกวันนี้ เลื่อนอ่านตามลำดับเวลา หรือแตะชื่อราชวงศ์ด้านบนเพื่อข้ามไปยังยุคที่สนใจ</p>
+</section>
+
+<div class="timeline-rule"><div class="rule"></div><span>ประมาณ 2070 ปีก่อนคริสตกาล → ค.ศ. 1912</span><div class="rule"></div></div>
+
+<!-- XIA -->
+<section class="era" id="xia" style="--accent:#6B7D4E">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ประมาณ 2070–1600 ปีก่อนคริสตกาล</span>
+      <h2>ราชวงศ์เซี่ย</h2>
+      <p>ราชวงศ์แรกตามบันทึกประวัติศาสตร์จีน เชื่อมโยงกับตำนานพระเจ้าอวี่ผู้ควบคุมอุทกภัยครั้งใหญ่ของแม่น้ำฮวงโหได้สำเร็จ จนได้รับการยกย่องให้ขึ้นครองราชย์แทนระบบสืบทอดตำแหน่งด้วยคุณธรรมแบบเดิม กลายเป็นจุดเริ่มต้นของการสืบทอดราชบัลลังก์แบบสายเลือด</p>
+      <p>หลักฐานทางโบราณคดีเกี่ยวกับเซี่ยยังคงเป็นที่ถกเถียง แต่แหล่งขุดค้นเอ้อร์หลี่โถวในมณฑลเหอหนานแสดงร่องรอยของเมืองที่มีพระราชวังดินอัด ระบบชลประทาน และงานสำริดยุคแรก ซึ่งวางรากฐานให้อารยธรรมลุ่มแม่น้ำฮวงโหพัฒนาต่อในยุคซาง</p>
+      <ul class="highlights">
+        <li>ตำนานพระเจ้าอวี่ผู้ควบคุมน้ำท่วมแม่น้ำฮวงโห</li>
+        <li>จุดเริ่มต้นระบบกษัตริย์สืบสายเลือด</li>
+        <li>แหล่งโบราณคดีเอ้อร์หลี่โถว หลักฐานเมืองยุคแรก</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-bridge">
+        <div class="hill"></div><div class="ground"></div><div class="water"></div>
+        <div class="structure"><div class="arch"></div></div>
+        <div class="caption">คันดินและทำนบกั้นน้ำริมแม่น้ำฮวงโห</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHANG -->
+<section class="era" id="shang" style="--accent:#8A5A3B">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ประมาณ 1600–1046 ปีก่อนคริสตกาล</span>
+      <h2>ราชวงศ์ซาง</h2>
+      <p>ราชวงศ์แรกที่มีหลักฐานทางโบราณคดีและอักษรยืนยันชัดเจน ปกครองบริเวณลุ่มแม่น้ำฮวงโหตอนกลาง มีเมืองหลวงหลายแห่งตลอดยุคจนลงหลักถาวรที่อันหยาง จุดเด่นของยุคนี้คืองานหล่อสำริดที่ประณีตอย่างยิ่ง ใช้ในพิธีกรรมบูชาบรรพบุรุษและเทพเจ้า</p>
+      <p>ชาวซางใช้กระดูกสัตว์และกระดองเต่าในการทำนายอนาคต แล้วจารึกคำถามและคำตอบด้วยอักษรกระดูกเสี่ยงทาย ซึ่งเป็นต้นแบบของอักษรจีนที่ใช้สืบมาจนถึงปัจจุบัน สังคมซางมีโครงสร้างชนชั้นชัดเจน กษัตริย์เป็นทั้งผู้นำทางการเมืองและศาสนา</p>
+      <ul class="highlights">
+        <li>อักษรกระดูกเสี่ยงทาย ต้นกำเนิดอักษรจีน</li>
+        <li>งานหล่อสำริดพิธีกรรมที่ซับซ้อนที่สุดในยุคโบราณ</li>
+        <li>เมืองหลวงอันหยาง แหล่งโบราณคดีสำคัญ</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-pagoda">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure">
+          <div class="tier" style="width:100%; height:46%; bottom:0;"></div>
+          <div class="tier" style="width:68%; height:40%; bottom:34%; margin-left:-34%;"></div>
+        </div>
+        <div class="caption">แท่นพิธีบูชาบรรพบุรุษและเครื่องสำริด</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZHOU -->
+<section class="era" id="zhou" style="--accent:#4C5E80">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ประมาณ 1046–256 ปีก่อนคริสตกาล</span>
+      <h2>ราชวงศ์โจว</h2>
+      <p>ราชวงศ์ที่ยาวนานที่สุดในประวัติศาสตร์จีน แบ่งเป็นโจวตะวันตกซึ่งปกครองรวมศูนย์จากเมืองหลวงเฮ่าจิง และโจวตะวันออกซึ่งอำนาจกระจายไปตามแคว้นต่างๆ จนแตกเป็นยุคชุนชิวและยุครณรัฐ ราชวงศ์โจวเป็นผู้เสนอแนวคิด "อาณัติแห่งสวรรค์" ที่ใช้อธิบายความชอบธรรมในการปกครองมาจนถึงราชวงศ์สุดท้าย</p>
+      <p>ท่ามกลางความวุ่นวายของสงครามระหว่างแคว้นในช่วงปลายราชวงศ์ กลับเป็นยุคที่ปรัชญาจีนเบ่งบานที่สุด ขงจื๊อ เล่าจื๊อ และนักคิดสำนักนิติธรรมล้วนถือกำเนิดในช่วงเวลานี้ วางรากฐานความคิดที่หล่อหลอมสังคมจีนไปอีกกว่าสองพันปี</p>
+      <ul class="highlights">
+        <li>แนวคิด "อาณัติแห่งสวรรค์" ความชอบธรรมของกษัตริย์</li>
+        <li>ยุคชุนชิวและรณรัฐ ร้อยสำนักความคิดประชันกัน</li>
+        <li>กำเนิดขงจื๊อ เล่าจื๊อ และปรัชญาสำนักนิติธรรม</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-wall">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure" style="height:30%; bottom:18%;"></div>
+        <div class="caption">กำแพงเมืองและป้อมประจำแคว้นยุครณรัฐ</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QIN -->
+<section class="era" id="qin" style="--accent:#4A4640">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">221–206 ปีก่อนคริสตกาล</span>
+      <h2>ราชวงศ์ฉิน</h2>
+      <p>ราชวงศ์แรกที่รวมแผ่นดินจีนเป็นหนึ่งเดียวได้สำเร็จ โดยจิ๋นซีฮ่องเต้ทรงยกเลิกระบบแคว้นแบบโจว เปลี่ยนเป็นการปกครองส่วนกลางผ่านมณฑลและเจ้าหน้าที่ที่แต่งตั้งโดยตรง พร้อมทั้งรวมมาตรฐานตัวอักษร สกุลเงิน น้ำหนัก และความกว้างของเพลาเกวียนให้เป็นระบบเดียวทั่วประเทศ</p>
+      <p>เพื่อป้องกันการรุกรานจากชนเผ่าทางเหนือ ราชวงศ์ฉินได้เชื่อมกำแพงเดิมของแต่ละแคว้นเข้าด้วยกันจนกลายเป็นต้นแบบของกำแพงเมืองจีน ขณะเดียวกันก็สร้างสุสานมหึมาพร้อมกองทัพทหารดินเผาหลายพันตัวเพื่อพิทักษ์พระศพ แม้ราชวงศ์จะล่มสลายภายในเวลาเพียง 15 ปีจากแรงกดดันของแรงงานเกณฑ์และกฎหมายที่เข้มงวด แต่ระบบการปกครองที่วางไว้กลับกลายเป็นต้นแบบให้ราชวงศ์จีนใช้สืบมาอีกกว่าสองพันปี</p>
+      <ul class="highlights">
+        <li>รวมแผ่นดินจีนเป็นจักรวรรดิแรกในประวัติศาสตร์</li>
+        <li>ต้นแบบกำแพงเมืองจีน</li>
+        <li>สุสานจิ๋นซีฮ่องเต้และกองทัพทหารดินเผา</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-wall">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure"></div>
+        <div class="caption">กำแพงเมืองจีนยุคก่อร่างสร้างตัว</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HAN -->
+<section class="era" id="han" style="--accent:#A6321F">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">206 ปีก่อนคริสตกาล – ค.ศ. 220</span>
+      <h2>ราชวงศ์ฮั่น</h2>
+      <p>สืบทอดอำนาจต่อจากฉินและปกครองยาวนานกว่าสี่ศตวรรษ จนกลายเป็นยุคที่หล่อหลอมอัตลักษณ์จีน คำว่า "ชาวฮั่น" ที่ใช้เรียกกลุ่มชาติพันธุ์หลักของจีนมาจนถึงปัจจุบันก็มีที่มาจากราชวงศ์นี้ ฮั่นเลือกใช้แนวคิดขงจื๊อเป็นอุดมการณ์หลักของรัฐ ผสมผสานกับระบบราชการแบบฉิน สอบคัดเลือกขุนนางด้วยความรู้แทนสายเลือดเป็นครั้งแรก</p>
+      <p>ในด้านการค้าและการทูต ราชวงศ์ฮั่นเปิดเส้นทางสายไหมเชื่อมจีนกับเอเชียกลาง เปอร์เซีย และโรม นำผ้าไหม เครื่องเทศ และเทคโนโลยีไหลเวียนข้ามทวีป พร้อมกันนั้นยังมีการประดิษฐ์กระดาษ ซึ่งเป็นหนึ่งในสิ่งประดิษฐ์ที่เปลี่ยนโลกมากที่สุดของจีนโบราณ</p>
+      <ul class="highlights">
+        <li>เปิดเส้นทางสายไหมเชื่อมจีนกับโลกตะวันตก</li>
+        <li>รับขงจื๊อเป็นอุดมการณ์แห่งรัฐ ตั้งระบบสอบขุนนาง</li>
+        <li>ประดิษฐ์กระดาษ ที่มาของชื่อชาติพันธุ์ฮั่น</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-pagoda">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure">
+          <div class="tier" style="width:70%; height:30%; bottom:0;"></div>
+          <div class="tier" style="width:50%; height:28%; bottom:24%; margin-left:-25%;"></div>
+          <div class="tier" style="width:32%; height:24%; bottom:44%; margin-left:-16%;"></div>
+        </div>
+        <div class="caption">หอสัญญาณไฟบนเส้นทางสายไหม</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISUNITY -->
+<section class="era" id="disunity" style="--accent:#7A5850">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 220–581</span>
+      <h2>ยุคแยกแผ่นดิน: สามก๊ก จิ้น ราชวงศ์เหนือ-ใต้</h2>
+      <p>เมื่อฮั่นล่มสลาย จีนแตกออกเป็นสามอาณาจักรคือวุย จ๊ก และง่อ ที่ผู้คนในภายหลังรู้จักผ่านวรรณกรรมสามก๊ก ก่อนจะรวมกันสั้นๆ ในราชวงศ์จิ้น แล้วแตกแยกอีกครั้งเป็นราชวงศ์เหนือที่ปกครองโดยชนเผ่าจากทุ่งหญ้า และราชวงศ์ใต้ที่สืบทอดวัฒนธรรมฮั่นดั้งเดิม ตลอดสามศตวรรษกว่าของความวุ่นวายนี้ พุทธศาสนาแพร่เข้าสู่จีนอย่างกว้างขวางเป็นครั้งแรก</p>
+      <p>แม้จะเป็นยุคสงครามและการแบ่งแยก แต่ก็เป็นช่วงเวลาที่วัฒนธรรมจีนตอนใต้และตอนเหนือผสมผสานกับชนเผ่าเร่ร่อน เกิดศิลปะถ้ำพุทธศาสนา เช่น ถ้ำหลงเหมินและอวิ๋นกัง ซึ่งกลายเป็นรากฐานให้ราชวงศ์สุยและถังรวมแผ่นดินและสร้างยุคทองในเวลาต่อมา</p>
+      <ul class="highlights">
+        <li>ยุคสามก๊ก ต้นแบบวรรณกรรมและกลยุทธ์การทหาร</li>
+        <li>พุทธศาสนาเผยแพร่เข้าสู่จีนอย่างกว้างขวาง</li>
+        <li>ศิลปะถ้ำพุทธ ถ้ำหลงเหมินและอวิ๋นกัง</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-wall">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure" style="height:26%; bottom:18%; opacity:0.85;"></div>
+        <div class="caption">ป้อมปราการชายแดนยุคสงครามแบ่งแยก</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUI -->
+<section class="era" id="sui" style="--accent:#3F6B8C">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 581–618</span>
+      <h2>ราชวงศ์สุย</h2>
+      <p>แม้จะครองอำนาจได้เพียงสั้นๆ แต่ราชวงศ์สุยคือผู้รวมแผ่นดินจีนที่แตกแยกมานานสามศตวรรษให้กลับเป็นหนึ่งเดียวอีกครั้ง ฟื้นฟูระบบราชการส่วนกลาง และริเริ่มระบบสอบจอหงวนเพื่อคัดเลือกขุนนางจากคนสามัญ ซึ่งกลายเป็นกลไกสำคัญของระบบราชการจีนไปอีกกว่าพันปี</p>
+      <p>ผลงานที่ยิ่งใหญ่ที่สุดของราชวงศ์นี้คือคลองใหญ่ต้าอวิ้นเหอ ที่เชื่อมแม่น้ำฮวงโหกับแม่น้ำแยงซีเข้าด้วยกัน ทำให้ธัญญาหารจากภาคใต้ลำเลียงขึ้นเหนือได้สะดวก แต่การเกณฑ์แรงงานมหาศาลเพื่อขุดคลองและสงครามที่ล้มเหลวหลายครั้งก็ทำให้ราชวงศ์อ่อนแอลงอย่างรวดเร็วจนล่มสลาย</p>
+      <ul class="highlights">
+        <li>รวมแผ่นดินจีนอีกครั้งหลังสามศตวรรษแห่งความแตกแยก</li>
+        <li>ขุดคลองใหญ่ต้าอวิ้นเหอเชื่อมแม่น้ำฮวงโหกับแยงซี</li>
+        <li>ริเริ่มระบบสอบจอหงวนคัดเลือกขุนนาง</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-bridge">
+        <div class="hill"></div><div class="ground"></div><div class="water"></div>
+        <div class="structure"><div class="arch"></div></div>
+        <div class="caption">คลองใหญ่ต้าอวิ้นเหอและเรือขนธัญญาหาร</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TANG -->
+<section class="era" id="tang" style="--accent:#B5892B">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 618–907</span>
+      <h2>ราชวงศ์ถัง</h2>
+      <p>ได้รับการยกย่องว่าเป็นยุคทองของจีนโบราณ เมืองหลวงฉางอานเป็นมหานครที่ใหญ่และเจริญที่สุดแห่งหนึ่งของโลกในยุคนั้น มีประชากรกว่าล้านคนและเป็นจุดหมายปลายทางของพ่อค้าและนักแสวงบุญจากเปอร์เซีย อาหรับ และเอเชียกลาง ราชสำนักถังเปิดกว้างรับวัฒนธรรมต่างชาติ ทำให้ศิลปะ ดนตรี และศาสนาหลากหลายรูปแบบเบ่งบานพร้อมกัน</p>
+      <p>ยุคถังยังเป็นยุคทองของบทกวีจีน กวีอย่างหลี่ไป๋และตู้ฝู่สร้างผลงานที่ยังคงท่องจำกันมาจนถึงปัจจุบัน ระบบสอบจอหงวนพัฒนาเต็มรูปแบบจนกลายเป็นเส้นทางหลักสู่ตำแหน่งขุนนาง ก่อนที่ความขัดแย้งภายในราชสำนักและกบฏอันลู่ซานจะค่อยๆ บั่นทอนอำนาจส่วนกลางจนราชวงศ์เสื่อมลง</p>
+      <ul class="highlights">
+        <li>ฉางอาน มหานครที่เปิดกว้างและรุ่งเรืองที่สุดในโลกยุคนั้น</li>
+        <li>ยุคทองของบทกวีจีน หลี่ไป๋ ตู้ฝู่</li>
+        <li>ระบบสอบจอหงวนเข้าสู่รูปแบบสมบูรณ์</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-pagoda">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure">
+          <div class="tier" style="width:62%; height:22%; bottom:0;"></div>
+          <div class="tier" style="width:50%; height:20%; bottom:18%; margin-left:-25%;"></div>
+          <div class="tier" style="width:39%; height:18%; bottom:34%; margin-left:-19.5%;"></div>
+          <div class="tier" style="width:28%; height:16%; bottom:48%; margin-left:-14%;"></div>
+          <div class="tier" style="width:17%; height:14%; bottom:60%; margin-left:-8.5%;"></div>
+        </div>
+        <div class="caption">เจดีย์ห่านป่าใหญ่ นครฉางอาน</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SONG -->
+<section class="era" id="song" style="--accent:#2F5A45">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 960–1279</span>
+      <h2>ราชวงศ์ซ่ง</h2>
+      <p>ยุคที่กองทัพไม่ได้แข็งแกร่งเป็นพิเศษ แต่กลับเป็นยุคที่เศรษฐกิจ เทคโนโลยี และวัฒนธรรมของจีนพัฒนาก้าวหน้าที่สุดยุคหนึ่ง เมืองไคเฟิงและหางโจวเติบโตเป็นศูนย์กลางพาณิชย์ที่คึกคักด้วยร้านค้ายามค่ำคืน และเป็นครั้งแรกที่จีนเริ่มใช้ธนบัตรกระดาษแทนเงินโลหะในการค้าขาย</p>
+      <p>สิ่งประดิษฐ์สำคัญของโลกสามอย่างถือกำเนิดหรือพัฒนาเต็มที่ในยุคนี้ ได้แก่ แท่นพิมพ์ตัวเรียงแบบเคลื่อนที่ เข็มทิศสำหรับการเดินเรือ และดินปืนสำหรับใช้ในการทหาร ศิลปะการวาดภาพทิวทัศน์และเครื่องเคลือบดินเผาก็รุ่งเรืองถึงขีดสุด แม้ในด้านการทหารซ่งจะต้องเสียดินแดนทางเหนือให้ชนเผ่าเลี่ยวและจินเป็นระยะ ก่อนจะล่มสลายให้กับกองทัพมองโกลของกุบไลข่านในที่สุด</p>
+      <ul class="highlights">
+        <li>ใช้ธนบัตรกระดาษเป็นครั้งแรกของโลก</li>
+        <li>พัฒนาแท่นพิมพ์ เข็มทิศ และดินปืนจนสมบูรณ์</li>
+        <li>เมืองหางโจวและไคเฟิง ศูนย์กลางพาณิชย์คึกคัก</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-bridge">
+        <div class="hill"></div><div class="ground"></div><div class="water"></div>
+        <div class="structure"><div class="arch"></div></div>
+        <div class="caption">สะพานโค้งข้ามคลองเมืองหางโจว</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- YUAN -->
+<section class="era" id="yuan" style="--accent:#4E4380">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 1271–1368</span>
+      <h2>ราชวงศ์หยวน</h2>
+      <p>ราชวงศ์แรกที่ปกครองจีนทั้งหมดโดยชนชาติที่ไม่ใช่ฮั่น ก่อตั้งโดยกุบไลข่าน หลานของเจงกิสข่าน หลังพิชิตราชวงศ์ซ่งใต้ได้สำเร็จ ย้ายเมืองหลวงมาที่ต้าตู้ ซึ่งต่อมาคือกรุงปักกิ่ง และวางระบบไปรษณีย์ม้าเร็วที่เชื่อมโยงจักรวรรดิมองโกลอันกว้างใหญ่ตั้งแต่จีนไปจนถึงยุโรปตะวันออก</p>
+      <p>ด้วยเครือข่ายการค้าที่ครอบคลุมทั้งทวีปเอเชีย ยุคหยวนเปิดทางให้พ่อค้าและนักเดินทางชาวตะวันตกอย่างมาร์โคโปโลเข้ามาสัมผัสความรุ่งเรืองของจีนโดยตรง แม้ชนชั้นปกครองมองโกลจะแบ่งแยกชนชั้นตามเชื้อชาติอย่างเข้มงวดจนสร้างความไม่พอใจในหมู่ชาวฮั่น จนนำไปสู่การลุกฮือของกบฏโพกผ้าแดงและการล่มสลายของราชวงศ์ในที่สุด</p>
+      <ul class="highlights">
+        <li>ราชวงศ์แรกที่ปกครองจีนทั้งหมดโดยชนต่างชาติ</li>
+        <li>ย้ายเมืองหลวงมาที่ต้าตู้ ต้นกำเนิดกรุงปักกิ่ง</li>
+        <li>เชื่อมจีนเข้ากับเครือข่ายการค้ามองโกลข้ามทวีป</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-palace">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure">
+          <div class="base" style="width:70%; height:34%; left:15%;"></div>
+          <div class="roof" style="width:78%; height:42%; left:11%; bottom:28%;"></div>
+        </div>
+        <div class="caption">ประตูวังหลวงต้าตู้ เมืองหลวงหยวน</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MING -->
+<section class="era" id="ming" style="--accent:#9C2A1A">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 1368–1644</span>
+      <h2>ราชวงศ์หมิง</h2>
+      <p>ก่อตั้งโดยจูหยวนจาง อดีตสามัญชนที่นำการขับไล่มองโกลออกจากจีน ฟื้นฟูการปกครองของชาวฮั่นและสร้างพระราชวังต้องห้ามในกรุงปักกิ่งเป็นศูนย์กลางอำนาจ ราชวงศ์หมิงยังสร้างกำแพงเมืองจีนส่วนที่เป็นอิฐและหินซึ่งหลงเหลือให้เห็นเป็นส่วนใหญ่ในปัจจุบัน เพื่อป้องกันการรุกรานจากทางเหนืออีกครั้ง</p>
+      <p>ในช่วงต้นราชวงศ์ แม่ทัพเรือเจิ้งเหอนำกองเรือมหาสมบัติออกเดินทางสำรวจไกลถึงเอเชียตะวันออกเฉียงใต้ อินเดีย อาระเบีย และแอฟริกาตะวันออกถึงเจ็ดครั้ง แสดงแสนยานุภาพทางทะเลของจีนที่ยิ่งใหญ่ที่สุดในยุคนั้น ก่อนที่ราชสำนักรุ่นหลังจะหันมาปิดประเทศ จำกัดการค้าทางทะเล และค่อยๆ อ่อนแอลงจากการทุจริตและภัยธรรมชาติจนล่มสลาย</p>
+      <ul class="highlights">
+        <li>สร้างพระราชวังต้องห้ามและกำแพงเมืองจีนส่วนที่เหลือถึงปัจจุบัน</li>
+        <li>กองเรือมหาสมบัติของเจิ้งเหอ เดินทางไกลถึงแอฟริกา</li>
+        <li>ฟื้นฟูการปกครองของชาวฮั่นหลังยุคมองโกล</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-palace">
+        <div class="hill"></div><div class="ground"></div>
+        <div class="structure">
+          <div class="base" style="width:82%; height:30%; left:9%;"></div>
+          <div class="roof" style="width:92%; height:48%; left:4%; bottom:24%;"></div>
+        </div>
+        <div class="caption">พระราชวังต้องห้าม กรุงปักกิ่ง</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QING -->
+<section class="era" id="qing" style="--accent:#1F5C4A">
+  <div class="era-inner">
+    <div class="era-text">
+      <span class="era-period">ค.ศ. 1644–1912</span>
+      <h2>ราชวงศ์ชิง</h2>
+      <p>ราชวงศ์สุดท้ายของจีน ก่อตั้งโดยชาวแมนจูจากทางตะวันออกเฉียงเหนือ ในช่วงต้นราชวงศ์ภายใต้จักรพรรดิคังซีและเฉียนหลง จีนขยายอาณาเขตกว้างใหญ่ที่สุดในประวัติศาสตร์ ครอบคลุมทิเบต มองโกเลีย และซินเจียง พร้อมสร้างพระราชวังฤดูร้อนอันวิจิตรริมทะเลสาบคุนหมิงในกรุงปักกิ่ง</p>
+      <p>ทว่าในช่วงศตวรรษที่ 19 จีนเผชิญแรงกดดันจากมหาอำนาจตะวันตกอย่างหนัก สงครามฝิ่นที่พ่ายแพ้ให้อังกฤษนำไปสู่สนธิสัญญาไม่เป็นธรรมหลายฉบับ เปิดเมืองท่าให้ต่างชาติและยกฮ่องกงให้อังกฤษ ตามมาด้วยกบฏไท่ผิงและความไม่สงบภายในที่บั่นทอนราชวงศ์อย่างต่อเนื่อง จนสิ้นสุดลงด้วยการปฏิวัติในปี ค.ศ. 1911 ปิดฉากระบบจักรพรรดิที่ปกครองจีนมากว่าสองพันปี</p>
+      <ul class="highlights">
+        <li>ขยายอาณาเขตจีนกว้างใหญ่ที่สุดในประวัติศาสตร์</li>
+        <li>สร้างพระราชวังฤดูร้อนริมทะเลสาบคุนหมิง</li>
+        <li>สิ้นสุดระบบจักรพรรดิจีนด้วยการปฏิวัติปี 1911</li>
+      </ul>
+    </div>
+    <div class="era-visual">
+      <div class="stage"><div class="diorama type-palace">
+        <div class="hill"></div><div class="ground"></div><div class="water"></div>
+        <div class="structure">
+          <div class="base" style="width:52%; height:26%; left:24%;"></div>
+          <div class="roof" style="width:60%; height:36%; left:20%; bottom:22%;"></div>
+        </div>
+        <div class="caption">พระตำหนักริมทะเลสาบคุนหมิง</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<footer>สรุปเนื้อหาเพื่อการศึกษาเบื้องต้น ภาพประกอบเป็นภาพวาดสไตล์ตัดกระดาษ ไม่ใช่ภาพถ่ายของสถานที่จริง</footer>
+
+<script>
+  const chips = document.querySelectorAll('.chips button');
+  const eras = document.querySelectorAll('.era');
+
+  chips.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.getElementById(btn.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        const id = entry.target.id;
+        const accent = getComputedStyle(entry.target).getPropertyValue('--accent').trim();
+        chips.forEach(b=>{
+          const active = b.dataset.target === id;
+          b.classList.toggle('active', active);
+          if(active){ b.style.setProperty('--accent-active', accent); }
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+
+  eras.forEach(e=> observer.observe(e));
+</script>
+
+</body>
+</html>
